@@ -2,31 +2,132 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tarot of the Future</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystical Tarot Predictions - Political Oracle</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 <body>
-    <h1>Wanna know the future of the crazy world?</h1>
-    <button onclick="drawCards()">Predict</button>
-    <div id="result"></div>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="title">Mystical Tarot Predictions</h1>
+            <p class="subtitle">Unveil the secrets of tomorrow through ancient wisdom and divine insight</p>
+            <button class="predict-button" onclick="drawCards()">
+                <span>🔮 Unveil the Future</span>
+            </button>
+        </header>
+
+        <!-- Loading Section -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p class="loading-text">Consulting the ancient spirits...</p>
+        </div>
+
+        <!-- Results Section -->
+        <div id="result"></div>
+    </div>
 
     <script>
         async function drawCards() {
-            const response = await fetch('/draw_cards');
-            const data = await response.json();
+            // Show loading
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const button = document.querySelector('.predict-button');
+            
+            loading.classList.add('show');
+            result.innerHTML = '';
+            button.disabled = true;
+            button.innerHTML = '<span>🔮 Consulting the Oracle...</span>';
 
-            let html = `<h2>You draw three cards...</h2>`;
+            try {
+                const response = await fetch('/draw_cards');
+                const data = await response.json();
 
-            data.cards.forEach(card => {
-                html += `<div class="card">
-                            <img src="${card.image}" class="card-img">
-                            <p>${card.name}</p>
-                         </div>`;
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                // Hide loading
+                loading.classList.remove('show');
+                button.disabled = false;
+                button.innerHTML = '<span>🔮 Unveil the Future</span>';
+
+                // Build the result HTML
+                let html = `
+                    <div class="cards-section">
+                        <h2 class="cards-title">✨ The Cards Reveal Their Secrets ✨</h2>
+                        <div class="cards-container">
+                `;
+
+                data.cards.forEach((card, index) => {
+                    html += `
+                        <div class="card" style="animation: fadeInUp 0.6s ease ${index * 0.2}s both;">
+                            <img src="${card.image}" class="card-img" alt="${card.name}">
+                            <h3 class="card-name">${card.name}</h3>
+                            <p class="card-meaning">${card.meaning}</p>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                    <div class="prophecy-section" style="animation: fadeInUp 0.8s ease 0.8s both;">
+                        <h3 class="prophecy-title">🌟 The Oracle's Prophecy 🌟</h3>
+                        <p class="prophecy-text">${data.prophecy}</p>
+                    </div>
+                `;
+
+                result.innerHTML = html;
+
+                // Add scroll to results
+                result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError('The spirits are silent. Please try again.');
+            }
+        }
+
+        function showError(message) {
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const button = document.querySelector('.predict-button');
+            
+            loading.classList.remove('show');
+            button.disabled = false;
+            button.innerHTML = '<span>🔮 Unveil the Future</span>';
+
+            result.innerHTML = `
+                <div class="prophecy-section" style="animation: fadeInUp 0.6s ease both;">
+                    <h3 class="prophecy-title">⚠️ Oracle's Warning ⚠️</h3>
+                    <p class="prophecy-text">${message}</p>
+                </div>
+            `;
+        }
+
+        // Add some mystical effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add particle effect to title
+            const title = document.querySelector('.title');
+            title.addEventListener('mouseenter', function() {
+                this.style.animationDuration = '1.5s';
+            });
+            title.addEventListener('mouseleave', function() {
+                this.style.animationDuration = '3s';
             });
 
-            html += `<h3>Prophecy:</h3><p>${data.prophecy}</p>`;
-            document.getElementById('result').innerHTML = html;
-        }
+            // Add click effect to button
+            const button = document.querySelector('.predict-button');
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
     </script>
 </body>
 </html>

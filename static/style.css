@@ -1,35 +1,440 @@
+/* Mystical Tarot Predictions - Sophisticated Design */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:wght@400;600&display=swap');
+
+:root {
+    --primary-gold: #d4af37;
+    --secondary-gold: #b8860b;
+    --dark-purple: #1a0b2e;
+    --deep-purple: #2d1b4e;
+    --mystic-blue: #0f3460;
+    --accent-red: #8b0000;
+    --text-gold: #f4d03f;
+    --text-silver: #bdc3c7;
+    --shadow-dark: rgba(0, 0, 0, 0.8);
+    --shadow-gold: rgba(212, 175, 55, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #1c1c1c;
-    color: #e0dede;
-    font-family: 'Georgia', serif;
+    font-family: 'Crimson Text', serif;
+    background: linear-gradient(135deg, var(--dark-purple) 0%, var(--deep-purple) 50%, var(--mystic-blue) 100%);
+    min-height: 100vh;
+    color: var(--text-silver);
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(15, 52, 96, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary-gold);
+    text-shadow: 
+        0 0 20px var(--shadow-gold),
+        0 0 40px var(--shadow-gold),
+        2px 2px 4px var(--shadow-dark);
+    margin-bottom: 1rem;
+    letter-spacing: 3px;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-gold);
+    font-style: italic;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+/* Button Styles */
+.predict-button {
+    background: linear-gradient(45deg, var(--primary-gold), var(--secondary-gold));
+    border: none;
+    padding: 1.2rem 3rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--dark-purple);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 
+        0 8px 25px var(--shadow-gold),
+        0 4px 10px var(--shadow-dark);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1px;
+}
+
+.predict-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.predict-button:hover::before {
+    left: 100%;
+}
+
+.predict-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 12px 35px var(--shadow-gold),
+        0 6px 15px var(--shadow-dark);
+}
+
+.predict-button:active {
+    transform: translateY(-1px);
+}
+
+/* Cards Section */
+.cards-section {
+    margin-top: 3rem;
     text-align: center;
 }
 
-h1 {
-    font-size: 2em;
-    margin-top: 20px;
+.cards-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: var(--text-gold);
+    margin-bottom: 2rem;
+    text-shadow: 0 0 15px var(--shadow-gold);
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 1.2em;
-    background-color: #3b3b3b;
-    color: #fff;
-    border: 2px solid #555;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #555;
-}
-
-.card-img, .mystic-img {
-    width: 200px;
-    margin: 10px;
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+    max-width: 100%;
 }
 
 .card {
-    display: inline-block;
-    margin: 10px;
+    background: linear-gradient(145deg, rgba(45, 27, 78, 0.9), rgba(26, 11, 46, 0.9));
+    border: 2px solid var(--primary-gold);
+    border-radius: 15px;
+    padding: 1.2rem;
+    width: 240px;
+    min-height: auto;
+    box-shadow: 
+        0 10px 30px var(--shadow-dark),
+        0 0 20px var(--shadow-gold);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 
+        0 20px 40px var(--shadow-dark),
+        0 0 30px var(--shadow-gold);
+}
+
+.card-img {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    background: transparent;
+}
+
+.card:hover .card-img {
+    transform: scale(1.05);
+}
+
+.card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--primary-gold);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.card-meaning {
+    font-size: 0.9rem;
+    color: var(--text-silver);
+    line-height: 1.4;
+    font-style: italic;
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Prophecy Section */
+.prophecy-section {
+    margin-top: 3rem;
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(145deg, rgba(26, 11, 46, 0.8), rgba(45, 27, 78, 0.8));
+    border-radius: 20px;
+    border: 1px solid var(--primary-gold);
+    box-shadow: 
+        0 15px 35px var(--shadow-dark),
+        0 0 25px var(--shadow-gold);
+    position: relative;
+    overflow: hidden;
+}
+
+.prophecy-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, var(--primary-gold), transparent);
+    animation: rotate 10s linear infinite;
+    opacity: 0.1;
+}
+
+.prophecy-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--accent-red);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.prophecy-text {
+    font-size: 1.3rem;
+    color: var(--text-gold);
+    line-height: 1.8;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 10px var(--shadow-gold);
+}
+
+/* Loading Animation */
+.loading {
+    display: none;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.loading.show {
+    display: block;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--deep-purple);
+    border-top: 4px solid var(--primary-gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+.loading-text {
+    color: var(--text-gold);
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+/* Animations */
+@keyframes titleGlow {
+    0% {
+        text-shadow: 
+            0 0 20px var(--shadow-gold),
+            0 0 40px var(--shadow-gold),
+            2px 2px 4px var(--shadow-dark);
+    }
+    100% {
+        text-shadow: 
+            0 0 30px var(--shadow-gold),
+            0 0 60px var(--shadow-gold),
+            2px 2px 4px var(--shadow-dark);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .cards-container {
+        gap: 1rem;
+    }
+    
+    .card {
+        width: 220px;
+        min-height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .title {
+        font-size: 2.5rem;
+    }
+    
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .card {
+        width: 100%;
+        max-width: 280px;
+        min-height: auto;
+    }
+    
+    .card-img {
+        max-height: 220px;
+    }
+    
+    .predict-button {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+    
+    .cards-title {
+        font-size: 2rem;
+    }
+    
+    .prophecy-title {
+        font-size: 1.8rem;
+    }
+    
+    .prophecy-text {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .cards-title {
+        font-size: 1.8rem;
+    }
+    
+    .prophecy-title {
+        font-size: 1.6rem;
+    }
+    
+    .prophecy-text {
+        font-size: 1rem;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+    
+    .card-img {
+        max-height: 200px;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark-purple);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-gold);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-gold);
 }

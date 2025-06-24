@@ -36,7 +36,7 @@ class TestApp:
             response = client.get('/')
             
             assert response.status_code == 200
-            assert b'Wanna know the future' in response.data
+            assert b'Mystical Tarot Predictions' in response.data
     
     @patch('app.Config.validate')
     def test_draw_cards_route_method_not_allowed(self, mock_validate):
