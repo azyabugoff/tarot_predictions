@@ -22,8 +22,8 @@ clean:
 
 # Render deployment (free tier optimized)
 deploy:
-	gunicorn --bind 0.0.0.0:10000 --workers 1 --timeout 300 --keep-alive 2 app:create_app()
+	gunicorn --bind 0.0.0.0:10000 --workers 1 --timeout 300 --keep-alive 2 "app:create_app()"
 
 # Alternative deployment command for Render (free tier)
 start:
-	gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 300 --keep-alive 2 app:create_app() 
+	gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 300 --keep-alive 2 "app:create_app()" 
