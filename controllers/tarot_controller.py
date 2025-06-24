@@ -23,9 +23,6 @@ class TarotController:
             # Draw cards
             cards = self.card_service.draw_cards(3)
             
-            # Get random image
-            random_image = self.card_service.get_random_image()
-            
             # Generate prophecy
             card_infos = [f"{card.name}: {card.meaning}" for card in cards]
             prophecy = self.ai_service.generate_prophecy(card_infos)
@@ -33,7 +30,6 @@ class TarotController:
             # Create response
             response_data = {
                 'cards': [self._card_to_dict(card) for card in cards],
-                'random_image': random_image,
                 'prophecy': prophecy
             }
             
@@ -45,11 +41,9 @@ class TarotController:
             # Fallback to a default prophecy if AI fails
             prophecy = "The oracle is silent... (AI error)"
             cards = self.card_service.draw_cards(3)
-            random_image = self.card_service.get_random_image()
             
             response_data = {
                 'cards': [self._card_to_dict(card) for card in cards],
-                'random_image': random_image,
                 'prophecy': prophecy
             }
             return response_data, 200

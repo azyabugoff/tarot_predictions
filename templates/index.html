@@ -15,7 +15,7 @@
             const response = await fetch('/draw_cards');
             const data = await response.json();
 
-            let html = `<img src="${data.random_image}" class="mystic-img"><br><h2>You draw three cards...</h2>`;
+            let html = `<h2>You draw three cards...</h2>`;
 
             data.cards.forEach(card => {
                 html += `<div class="card">

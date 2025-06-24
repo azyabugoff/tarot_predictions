@@ -15,5 +15,4 @@ class TarotCard:
 class CardReading:
     """Represents a complete tarot card reading."""
     cards: List[TarotCard]
-    random_image: str
     prophecy: str

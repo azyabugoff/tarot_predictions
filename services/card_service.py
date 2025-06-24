@@ -15,7 +15,6 @@ class CardService:
     
     def __init__(self):
         self.cards_folder = Config.CARDS_FOLDER
-        self.random_images_folder = Config.RANDOM_IMAGES_FOLDER
         logger.info(f"CardService initialized with cards folder: {self.cards_folder}")
     
     def get_available_cards(self) -> List[str]:
@@ -27,16 +26,6 @@ class CardService:
         card_files = [f for f in os.listdir(self.cards_folder) if f.endswith('.jpg')]
         logger.debug(f"Found {len(card_files)} card files")
         return card_files
-    
-    def get_random_images(self) -> List[str]:
-        """Get list of available random image files."""
-        if not os.path.exists(self.random_images_folder):
-            logger.warning(f"Random images folder does not exist: {self.random_images_folder}")
-            return []
-        
-        random_images = [f for f in os.listdir(self.random_images_folder) if f.endswith('.jpg')]
-        logger.debug(f"Found {len(random_images)} random image files")
-        return random_images
     
     def draw_cards(self, count: int = 3) -> List[TarotCard]:
         """
@@ -59,18 +48,6 @@ class CardService:
         selected_cards = random.sample(card_files, count)
         logger.info(f"Drew {count} cards: {[card.replace('.jpg', '') for card in selected_cards]}")
         return [self._create_tarot_card(card_file) for card_file in selected_cards]
-    
-    def get_random_image(self) -> str:
-        """Get a random image path."""
-        random_images = self.get_random_images()
-        if not random_images:
-            logger.warning("No random images available")
-            return ""
-        
-        selected_image = random.choice(random_images)
-        image_path = f'/{self.random_images_folder}/{selected_image}'
-        logger.debug(f"Selected random image: {selected_image}")
-        return image_path
     
     def _create_tarot_card(self, card_file: str) -> TarotCard:
         """Create a TarotCard object from a file name."""

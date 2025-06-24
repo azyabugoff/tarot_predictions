@@ -6,7 +6,6 @@ A Flask-based web application that generates political prophecies using tarot ca
 
 - Draw three random tarot cards
 - Generate AI-powered political prophecies based on card meanings
-- Display random mystical images
 - Modern, responsive web interface
 
 ## Architecture
@@ -36,7 +35,6 @@ t_predictions/
 │   └── logger.py
 ├── static/              # Static assets
 │   ├── cards/           # Tarot card images
-│   ├── random_images/   # Random mystical images
 │   └── style.css        # Stylesheet
 └── templates/           # HTML templates
     └── index.html
@@ -85,7 +83,6 @@ HF_TOKEN=your_huggingface_token_here
 
 4. Ensure you have the required directories:
 - `static/cards/` - Contains tarot card images (.jpg files)
-- `static/random_images/` - Contains random mystical images (.jpg files)
 
 ## Usage
 
@@ -114,7 +111,6 @@ python app.py
       "meaning": "Creator, leader, initiative, fulfillment of hopes, great potential."
     }
   ],
-  "random_image": "/static/random_images/mystic_image.jpg",
   "prophecy": "Generated political prophecy text..."
 }
 ```
