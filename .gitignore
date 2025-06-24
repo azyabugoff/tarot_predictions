@@ -1,10 +1,12 @@
+# Existing files / folders
 .env
 .venv/
 __pycache__/
 .idea/
-
-# Coverage files
 .coverage
+
+# Files / folders for reinsurance
+# Coverage files
 .coverage.*
 htmlcov/
 .pytest_cache/
