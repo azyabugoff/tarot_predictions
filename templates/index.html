@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tarot of the Future</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Wanna know the future of the crazy world?</h1>
+    <button onclick="drawCards()">Predict</button>
+    <div id="result"></div>
+
+    <script>
+        async function drawCards() {
+            const response = await fetch('/draw_cards');
+            const data = await response.json();
+
+            let html = `<img src="${data.random_image}" class="mystic-img"><br><h2>You draw three cards...</h2>`;
+
+            data.cards.forEach(card => {
+                html += `<div class="card">
+                            <img src="${card.image}" class="card-img">
+                            <p>${card.name}</p>
+                         </div>`;
+            });
+
+            html += `<h3>Prophecy:</h3><p>${data.prophecy}</p>`;
+            document.getElementById('result').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
